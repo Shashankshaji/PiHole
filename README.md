@@ -6,11 +6,37 @@
 <!-- Delete above HTML and insert markdown for dockerhub : ![Pi-hole](https://pi-hole.github.io/graphics/Vortex/Vortex_with_text.png) -->
 
 - This can be run on cloud like **AWS** or locally in **Proxmox**
-- -
- ### First Command will be
+- Here I have used Ubuntu Server in AWS
+ ### The Commands will be
 ```
+sudo systemctl stop systemd-resolved.service
+sudo systemctl disable systemd-resolved.service
+```
+**Now When you try to ping google.com it doesn't work because we disabled the dns service**
 
-
+### Now we'll edit the resolver files
+```
+sudo nano /etc/resolv.conf
+```
+- Now in the file we chnage the nameserver from whatever is given to 8.8.8.8 and rest remains the same**
+```
+nameserver 8.8.8.8
+```
+Press Ctrl+X to save
+- Now when you try to ping google it'll work
+- Now we'll update our repositories using
+```
+sudo apt update
+```
+### Next we'll install docker
+```
+sudo apt install docker.io
+```
+### We'll create and  open a new file pihole.sh
+```
+sudo nano pihole.sh
+```
+## In the file paste the below script
 ```
 #!/bin/bash
 
@@ -52,3 +78,28 @@ for i in $(seq 1 20); do
     fi
 done;
 ```
+### Changing the attribute of the file to be executable
+```
+sudo chmod u+x pihole.sh
+```
+### To launch the script
+```
+sudo ./pihole.sh
+```
+**It'll provide you with a password to login after installing**
+
+### Open web browser and type your ipaddress along with /admin. For example
+```
+192.168.1.3/admin
+```
+- Login with the given password
+## Now to change the password
+```
+sudo docker exec -it pihole bash
+```
+- Now your are in
+- To change password 
+```
+pihole -a -p
+```
+- Type your new password and login 
