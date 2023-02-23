@@ -1,3 +1,4 @@
+```
 #!/bin/bash
 
 # https://github.com/pi-hole/docker-pi-hole/blob/master/README.md
@@ -37,3 +38,4 @@ for i in $(seq 1 20); do
         exit 1
     fi
 done;
+```
